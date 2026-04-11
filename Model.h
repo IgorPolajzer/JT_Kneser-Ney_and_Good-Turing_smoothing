@@ -15,15 +15,13 @@ class Model {
             "here": 0.2
         }
     */
-    std::unordered_map<
-        std::string,
-        std::unordered_map<std::string, double>
-    > entries;
+    std::vector<std::pair<std::string, double>> entries;
+
 
     public:
 
     void addEntry(const std::string& name, double& value) {
-        entries[name] = value;
+        entries.emplace_back(name, value);
     }
 };
 

@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "ModelBuilder.h"
 #include "NGramAnalyzer.h"
 
 int main(int argc, char* argv[]) {
@@ -14,10 +15,9 @@ int main(int argc, char* argv[]) {
     std::string corpusPath = argv[3];
 
 
-    auto nGrams = NGramAnalyzer::getNgramFrequencies(corpusPath, n);
 
     if (modelStrategy == "-gt") {
-
+        ModelBuilder::buildKneserGlay(corpusPath, n);
     } else if (modelStrategy == "-kn") {
 
     } else {

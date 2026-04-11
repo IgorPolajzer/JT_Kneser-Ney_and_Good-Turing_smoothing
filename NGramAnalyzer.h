@@ -97,7 +97,7 @@ namespace NGramAnalyzer {
         return nGrams;
     }
 
-    inline std::vector<std::pair<std::string, int>> getNgramFrequencies(const std::string &filePath, size_t n) {
+    inline std::vector<std::pair<std::string, int>> getNgramFrequencies(const std::string &filePath, size_t nGramSize) {
         std::ifstream fileStream(filePath);
 
         if (!fileStream.is_open()) {
@@ -114,18 +114,18 @@ namespace NGramAnalyzer {
         std::vector<std::string> sentences = parseSentences(stringFile);
 
         // Process sentences into n-grams.
-       std::unordered_map<std::string, int> nGrams;
+        std::unordered_map<std::string, int> nGrams;
 
         for (std::string &s: sentences) {
             // Remove punctuations.
             std::string strippedSentence = removePunctuations(s);
 
             // Generate n-grams (word n-grams).
-            std::unordered_map<std::string, int> sentenceNgrams = getNgrams(n, strippedSentence);
+            std::unordered_map<std::string, int> sentenceNgrams = getNgrams(nGramSize, strippedSentence);
             Util::concatenateMaps(nGrams, sentenceNgrams);
         }
 
-        return  Util::mapToSortedVect(nGrams);
+        return Util::mapToSortedVect(nGrams);
     }
 };
 
