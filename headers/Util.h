@@ -13,7 +13,7 @@
 namespace Util {
 
     template<typename T>
-    inline bool cmp(const std::pair<std::string, T>& a, const std::pair<std::string, T>& b) {
+    bool cmp(const std::pair<std::string, T>& a, const std::pair<std::string, T>& b) {
         return a.second > b.second;
     }
 

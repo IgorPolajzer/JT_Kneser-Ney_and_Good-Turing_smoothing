@@ -12,17 +12,8 @@
 
 namespace Predictor {
 
-    /*Step 1:  context = "Mariboru"          → predicts "fakulteta"
-         sentence = "Univerza v Mariboru fakulteta"
-
-    Step 2:  context = "fakulteta"         → predicts "za"
-             sentence = "Univerza v Mariboru fakulteta za"
-
-    Step 3:  context = "za"                → predicts "elektrotehniko"
-             sentence = "Univerza v Mariboru fakulteta za elektrotehniko"*/
-
     inline std::string predictWord(const Model& model, const std::vector<std::string>& words) {
-        if (model.getN() == -1) {
+        if (!model.getN()) {
             std::cout << "Model doesn't have N set." << std::endl;
             return "";
         }
@@ -46,16 +37,20 @@ namespace Predictor {
             return Util::senteceToWords(bestCandidate->first).back();
         }
 
+        // Unseen value <UNK>. Fallback to the most occurring word.
         return Util::senteceToWords(model.getEntries().front().first).back();
     }
 
     inline std::string predictWords(const Model& model, const std::string& sentence, int M) {
+        std::cout << "Vhod: " << sentence << std::endl;
+        std::cout << "Vmesni rezultati: " << std::endl;
         std::vector<std::string> words = Util::senteceToWords(sentence);
 
         for (int i = 0; i < M; i++) {
             const std::string nextWord = predictWord(model, words);
             if (nextWord.empty()) break;
             words.push_back(nextWord);
+            std::cout << words.back() << std::endl;
         }
 
         return Util::wordsToSentence(words);

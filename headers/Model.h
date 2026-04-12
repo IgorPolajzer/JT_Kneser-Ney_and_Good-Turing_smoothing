@@ -28,6 +28,7 @@ class Model {
     static constexpr std::string_view HEADER_UNSEEN = "#UNSEEN:";
 
     public:
+    static constexpr std::string UNKNOWN = "<UNK>";
 
     Model(const int n) : n(n) {}
     Model() = default;
@@ -40,7 +41,7 @@ class Model {
     void setUnseenProbability(const double p) { unseenProbability = p; }
 
     void addEntry(const std::string& nGram, const double frequency) {
-        if (getN()) {
+        if (getN() && nGram != UNKNOWN) {
             setN(Util::senteceToWords(nGram).size());
         }
         entries.emplace_back(nGram, frequency);
