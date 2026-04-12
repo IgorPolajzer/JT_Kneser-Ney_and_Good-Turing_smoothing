@@ -7,41 +7,59 @@
 #include <optional>
 
 #include "Model.h"
-#include "NGramAnalyzer.h"
+#include "NGramProcessor.h"
 #include <string>
 
 namespace Predictor {
 
     inline std::string predictWord(const Model& model, const std::vector<std::string>& words) {
-        if (!model.getN()) {
+        if (model.getN() == 0) {
             std::cout << "Model doesn't have N set." << std::endl;
             return "";
         }
 
-        int NMinusOne = model.getN() - 1;
         std::optional<std::pair<std::string, double>> bestCandidate;
 
-        while (!bestCandidate && NMinusOne > 0) {
-            const std::string lastWords = Util::minusNwordsToSentece(words, NMinusOne);
+        for (int contextSize = model.getN() - 1; contextSize >= 0; --contextSize) {
+            if (contextSize > 0 && words.size() < contextSize) continue;
 
-            for (const auto& nGram : model.getEntries()) {
-                const std::string nMinusOneWords = NGramAnalyzer::constructNMinusOneGrams(nGram);
-                if (nMinusOneWords == lastWords && (!bestCandidate || bestCandidate->second < nGram.second)) {
-                    bestCandidate = nGram;
+            const std::string context = contextSize > 0 ? Util::minusNwordsToSentece(words, contextSize) : "";
+
+            for (const auto& nGramEntry : model.getEntries()) {
+                if (nGramEntry.first == Model::UNKNOWN) continue;
+
+                auto nGramWords = Util::senteceToWords(nGramEntry.first);
+                
+                if (nGramWords.size() != contextSize + 1) continue;
+
+                std::vector prefixWords(nGramWords.begin(), nGramWords.begin() + contextSize);
+                std::string prefix = Util::wordsToSentence(prefixWords);
+
+                if (prefix == context) {
+                    if (!bestCandidate || nGramEntry.second > bestCandidate->second) {
+                        bestCandidate = nGramEntry;
+                    }
                 }
             }
-            NMinusOne--;
+
+            if (bestCandidate) break;
         }
 
         if (bestCandidate.has_value()) {
             return Util::senteceToWords(bestCandidate->first).back();
         }
 
-        // Unseen value <UNK>. Fallback to the most occurring word.
-        return Util::senteceToWords(model.getEntries().front().first).back();
+        // Fallback to the most occurring word in the model.
+        for (const auto& entry : model.getEntries()) {
+            if (entry.first != Model::UNKNOWN) {
+                return Util::senteceToWords(entry.first).back();
+            }
+        }
+        
+        return Model::UNKNOWN;
     }
 
-    inline std::string predictWords(const Model& model, const std::string& sentence, int M) {
+    inline std::string predictWords(const Model& model, const std::string& sentence, const int M) {
         std::cout << "Vhod: " << sentence << std::endl;
         std::cout << "Vmesni rezultati: " << std::endl;
         std::vector<std::string> words = Util::senteceToWords(sentence);

@@ -6,7 +6,6 @@
 #define RV2_N_GRAM_GENERATOR_H
 #include <fstream>
 #include <iostream>
-#include <regex>
 #include <sstream>
 #include <string>
 #include <unordered_map>
@@ -14,9 +13,7 @@
 
 #include "Util.h"
 
-namespace NGramAnalyzer {
-    static constexpr std::string N_GRAM_BEGIN_TAG = "<s> ";
-    static constexpr std::string N_GRAM_END_TAG = " </s>";
+namespace NGramProcessor {
 
     inline std::string removePunctuations(std::string &s) {
         std::string result;
@@ -29,10 +26,10 @@ namespace NGramAnalyzer {
                 std::string plausibleEndTag = s.substr(i, 5);
 
 
-                if (plausibleStartTag == N_GRAM_BEGIN_TAG) {
+                if (plausibleStartTag == Util::SENTENCE_BEGIN_TAG) {
                     result += plausibleStartTag;
                     i += plausibleStartTag.length() - 1;
-                } else if (plausibleEndTag == N_GRAM_END_TAG) {
+                } else if (plausibleEndTag == Util::SENTECE_END_TAG) {
                     result += plausibleEndTag;
                     i += plausibleEndTag.length() - 1;
                 }
@@ -46,21 +43,7 @@ namespace NGramAnalyzer {
         return s;
     }
 
-    inline std::vector<std::string> parseSentences(const std::string &s) {
-        static const std::regex sentenceRegex(R"((\n+|[.!?]\s+))");
-        std::sregex_token_iterator iter(s.begin(), s.end(), sentenceRegex, -1);
-        std::sregex_token_iterator end;
-        std::vector<std::string> sentences = {iter, end};
-
-        for (std::string &sentence: sentences) {
-            std::string taggedSentece = N_GRAM_BEGIN_TAG + sentence + N_GRAM_END_TAG;
-            sentence = taggedSentece;
-        }
-
-        return sentences;
-    }
-
-    inline std::unordered_map<std::string, int> getAll(const size_t &n, const std::string &sentence) {
+    inline std::unordered_map<std::string, int> getAllFromSentence(const size_t &n, const std::string &sentence) {
         std::vector<std::string> words = Util::senteceToWords(sentence);
 
         std::unordered_map<std::string, int> nGrams;
@@ -89,13 +72,17 @@ namespace NGramAnalyzer {
         return nGrams;
     }
 
-    inline std::string constructNMinusOneGrams(const std::pair<std::string, int>& nGram) {
-        std::vector<std::string> nGramWords = Util::senteceToWords(nGram.first);
-        nGramWords.pop_back();
+    inline std::string popFirstWordOFNgram(std::string nGram) {
+        std::vector<std::string> nGramWords = Util::senteceToWords(nGram);
+
+        if (!nGramWords.empty()) {
+            nGramWords.erase(nGramWords.begin());
+        }
+
         return Util::wordsToSentence(nGramWords);
     }
 
-    inline std::vector<std::pair<std::string, int>> getFrequencies(const std::string &filePath, size_t nGramSize) {
+    inline std::vector<std::pair<std::string, int>> getNgramFrequencies(const std::string &filePath, size_t nGramSize) {
         std::ifstream fileStream(filePath);
 
         if (!fileStream.is_open()) {
@@ -109,7 +96,7 @@ namespace NGramAnalyzer {
         std::string stringFile = buffer.str();
 
         // Parse string into sentences (Splits text by \n . ! ?).
-        std::vector<std::string> sentences = parseSentences(stringFile);
+        std::vector<std::string> sentences = Util::stringToSentences(stringFile);
 
         // Process sentences into n-grams.
         std::unordered_map<std::string, int> nGrams;
@@ -119,11 +106,25 @@ namespace NGramAnalyzer {
             std::string strippedSentence = removePunctuations(s);
 
             // Generate n-grams (word n-grams).
-            std::unordered_map<std::string, int> sentenceNgrams = getAll(nGramSize, strippedSentence);
+            std::unordered_map<std::string, int> sentenceNgrams = getAllFromSentence(nGramSize, strippedSentence);
             Util::concatenateMaps(nGrams, sentenceNgrams);
         }
 
         return Util::mapToSortedVect(nGrams);
+    }
+
+    inline std::pair<std::string, std::vector<std::string>> splitNGramContext(const std::string &nGram) {
+        auto words = Util::senteceToWords(nGram);
+        if (words.empty()) return {"", {}};
+
+        // Zadnja beseda je b_i
+        std::string lastWord = words.back();
+
+        // Kontekst so vse besede pred zadnjo (b_{i-n+1} do b_{i-1})
+        words.pop_back();
+        std::vector<std::string> preceedingContext = words;
+
+        return {lastWord, preceedingContext};
     }
 };
 

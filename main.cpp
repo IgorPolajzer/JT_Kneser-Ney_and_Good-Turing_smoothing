@@ -1,12 +1,13 @@
 #include <iostream>
 
 #include "headers/ModelBuilder.h"
+#include "headers/Perplexity.h"
 #include "headers/Predictor.h"
 
 int main(int argc, char* argv[]) {
 
     if (argc < 2) {
-        std::cout << "Usage: -g/-p";
+        std::cout << "Usage: -g/-p/-mp";
         return 0;
     }
 
@@ -28,7 +29,7 @@ int main(int argc, char* argv[]) {
         if (modelStrategy == "-gt") {
             model = ModelBuilder::buildGoodTuring(corpusPath, n);
         } else if (modelStrategy == "-kn") {
-
+            model = ModelBuilder::buildKneserNey(corpusPath, n);
         } else {
             std::cout << "Smoothing '" << modelStrategy << "'not supported. Pick Good Turing '-gt' or Kneser-Nay '-kn'" << std::endl;
             return 0;
@@ -46,13 +47,27 @@ int main(int argc, char* argv[]) {
         const std::string modelPath = argv[2];
         const int M = 5;
 
-        std::string sentence;
-        std::cout << "Input sentence: ";
-        std::getline(std::cin, sentence);
+        std::string sentence = "Univerza v Mariboru";
+        /*std::cout << "Input sentence: ";
+        std::getline(std::cin, sentence);*/
 
         const Model model = Model::loadFromFile(modelPath);
         std::string predictedSentence = Predictor::predictWords(model, sentence, M);
         std::cout << "Izhod: " << predictedSentence << std::endl;
+
+    // Model perplexity.
+    } else if (mode == "-mp") {
+        if (argc < 4) {
+            std::cout << "Usage: -mp [model-path] [corpus-path]";
+            return 0;
+        }
+
+        std::string modelPath = argv[2];
+        std::string corpusPath = argv[3];
+
+        Model model = Model::loadFromFile(modelPath);
+        const double perplexity = Perplexity::compute(model, corpusPath);
+        std::cout << "Perplexity: " << std::fixed << std::setprecision(20) << perplexity << std::endl;
     }
 
     return 0;
