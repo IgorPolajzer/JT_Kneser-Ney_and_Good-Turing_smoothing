@@ -11,13 +11,14 @@
 
 namespace Util {
 
-    inline bool cmp(const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
-        return a.second > b.second; // > for descending (highest value first)
+    template<typename T>
+    inline bool cmp(const std::pair<std::string, T>& a, const std::pair<std::string, T>& b) {
+        return a.second > b.second;
     }
 
     inline std::vector<std::pair<std::string, int>> mapToSortedVect(const std::unordered_map<std::string, int>& map) {
         std::vector<std::pair<std::string, int>> sorted(map.begin(), map.end());
-        std::ranges::sort(sorted, cmp);
+        std::ranges::sort(sorted, cmp<int>);
         return sorted;
     }
 

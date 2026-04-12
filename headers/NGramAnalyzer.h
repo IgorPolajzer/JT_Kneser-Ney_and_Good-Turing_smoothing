@@ -90,8 +90,8 @@ namespace NGramAnalyzer {
             }
             if (end) break;
 
-            if (nGrams.find(nGram) != nGrams.end()) nGrams[nGram] = 1;
-            else nGrams[nGram]++;
+            if (nGrams.contains(nGram)) nGrams[nGram]++;
+            else nGrams[nGram] = 1;
         }
 
         return nGrams;
