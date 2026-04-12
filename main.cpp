@@ -1,9 +1,11 @@
 #include <iostream>
+#include <windows.h>
 
 #include "headers/ModelBuilder.h"
 #include "headers/Predictor.h"
 
 int main(int argc, char* argv[]) {
+    SetConsoleOutputCP(CP_UTF8);
 
     if (argc < 2) {
         std::cout << "Usage: -g/-p";
@@ -45,13 +47,14 @@ int main(int argc, char* argv[]) {
 
         const std::string modelPath = argv[2];
         const int M = 5;
-        std::string sentence = "Univerza na Ptuju";
 
-        /*std::cout << "Input sentence: ";
-        std::getline(std::cin, sentence);*/
+        std::string sentence;
+        std::cout << "Input sentence: ";
+        std::getline(std::cin, sentence);
 
         const Model model = Model::loadFromFile(modelPath);
-        Predictor::predict(model, sentence, M);
+        std::string predictedSentence = Predictor::predictWords(model, sentence, M);
+        std::cout << predictedSentence << std::endl;
     }
 
     return 0;

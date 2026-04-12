@@ -22,26 +22,27 @@ class Model {
     */
     std::vector<std::pair<std::string, double>> entries;
     int n;
+    double unseenProbability = 0.0;
+
+    static constexpr std::string_view HEADER_N = "#N:";
+    static constexpr std::string_view HEADER_UNSEEN = "#UNSEEN:";
 
     public:
 
-    Model(const int n) {
-        this->n = n;
-    }
-
+    Model(const int n) : n(n) {}
     Model() = default;
 
     [[nodiscard]] std::vector<std::pair<std::string, double>> getEntries() const { return entries; }
+    [[nodiscard]] int getN() const { return n; }
+    [[nodiscard]] double getUnseenProbability() const { return unseenProbability; }
 
     void setN(const int n) { this->n = n; }
-
-    [[nodiscard]] int getN() const { return n; }
+    void setUnseenProbability(const double p) { unseenProbability = p; }
 
     void addEntry(const std::string& nGram, const double frequency) {
         if (getN()) {
             setN(Util::senteceToWords(nGram).size());
         }
-
         entries.emplace_back(nGram, frequency);
     }
 
@@ -51,9 +52,9 @@ class Model {
 
     void saveToFile(const std::string& modelPath) const {
         std::ofstream file(modelPath);
-
         if (!file.is_open()) {
             std::cout << "Could not open file " << modelPath << std::endl;
+            return;
         }
 
         for (const auto& entry : entries) {
@@ -63,11 +64,10 @@ class Model {
 
     static Model loadFromFile(const std::string& modelPath) {
         std::ifstream file(modelPath);
-
         if (!file.is_open()) {
             std::cout << "Could not open file " << modelPath << std::endl;
+            return {};
         }
-
 
         Model model;
         std::string line;
