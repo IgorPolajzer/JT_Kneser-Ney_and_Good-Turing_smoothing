@@ -61,15 +61,7 @@ namespace NGramAnalyzer {
     }
 
     inline std::unordered_map<std::string, int> getNgrams(const size_t &n, const std::string &sentence) {
-        std::vector<std::string> tokens;
-
-        std::stringstream ss(sentence);
-        std::vector<std::string> words;
-        std::string word;
-
-        while (ss >> word) {
-            words.push_back(word);
-        }
+        std::vector<std::string> words = Util::senteceToWords(sentence);
 
         std::unordered_map<std::string, int> nGrams;
         bool end = false;
@@ -95,6 +87,12 @@ namespace NGramAnalyzer {
         }
 
         return nGrams;
+    }
+
+    inline std::string constructNMinusOneGrams(const std::pair<std::string, int>& nGram) {
+        std::vector<std::string> nGramWords = Util::senteceToWords(nGram.first);
+        nGramWords.pop_back();
+        return Util::wordsToSentence(nGramWords);
     }
 
     inline std::vector<std::pair<std::string, int>> getNgramFrequencies(const std::string &filePath, size_t nGramSize) {

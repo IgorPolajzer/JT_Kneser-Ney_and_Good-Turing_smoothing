@@ -4,13 +4,13 @@
 
 #ifndef RV2_MODELBUILDER_H
 #define RV2_MODELBUILDER_H
-#include <cmath>
 #include <string>
 
 #include "Model.h"
 #include "NGramAnalyzer.h"
 
 namespace ModelBuilder {
+
     inline Model buildKneserGlay(const std::string& corpusPath, int nGramSize) {
     }
 
@@ -21,7 +21,7 @@ namespace ModelBuilder {
         long N = 0;
         for (const auto& ng : nGrams) N += ng.second;
 
-        Model model;
+        Model model(nGramSize);
         for (const auto& nGram : nGrams) {
             const int c = nGram.second;
 

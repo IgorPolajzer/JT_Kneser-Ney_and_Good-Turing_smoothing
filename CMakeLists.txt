@@ -9,4 +9,5 @@ add_executable(RV2 main.cpp
         headers/Model.h
         headers/Util.h
         headers/Predictor.h
+        headers/NGram.h
 )

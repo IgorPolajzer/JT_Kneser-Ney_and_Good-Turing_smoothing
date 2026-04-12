@@ -8,6 +8,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <sstream>
 
 namespace Util {
 
@@ -28,6 +29,32 @@ namespace Util {
         }
     }
 
+    inline std::vector<std::string> senteceToWords(const std::string& sentence) {
+        std::stringstream ss(sentence);
+        std::vector<std::string> words;
+        std::string word;
+
+        while (ss >> word) {
+            words.push_back(word);
+        }
+
+        return words;
+    }
+
+    inline std::string wordsToSentence(std::vector<std::string> words) {
+        std::string sentence;
+        for (const std::string &word: words) {
+            if (!sentence.empty()) sentence += " ";
+            sentence += word;
+        }
+
+        return sentence;
+    }
+
+    inline std::string minusNwordsToSentece(const std::vector<std::string>& words, const int& N) {
+        std::vector sentenceWords(words.end() - N, words.end());
+        return wordsToSentence(sentenceWords);
+    }
 }
 
 #endif //RV2_UTIL_H

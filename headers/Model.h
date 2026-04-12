@@ -21,16 +21,32 @@ class Model {
         }
     */
     std::vector<std::pair<std::string, double>> entries;
-
+    int n;
 
     public:
 
-    void sort() {
-        std::ranges::sort(entries, Util::cmp<double>);
+    Model(const int n) {
+        this->n = n;
     }
 
-    void addEntry(const std::string& name, const double value) {
-        entries.emplace_back(name, value);
+    Model() = default;
+
+    [[nodiscard]] std::vector<std::pair<std::string, double>> getEntries() const { return entries; }
+
+    void setN(const int n) { this->n = n; }
+
+    [[nodiscard]] int getN() const { return n; }
+
+    void addEntry(const std::string& nGram, const double frequency) {
+        if (getN()) {
+            setN(Util::senteceToWords(nGram).size());
+        }
+
+        entries.emplace_back(nGram, frequency);
+    }
+
+    void sort() {
+        std::ranges::sort(entries, Util::cmp<double>);
     }
 
     void saveToFile(const std::string& modelPath) const {

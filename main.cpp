@@ -45,13 +45,13 @@ int main(int argc, char* argv[]) {
 
         const std::string modelPath = argv[2];
         const int M = 5;
-        std::string sentece;
+        std::string sentence = "Univerza na Ptuju";
 
-        std::cout << "Input sentence: ";
-        std::cin >> sentece;
+        /*std::cout << "Input sentence: ";
+        std::getline(std::cin, sentence);*/
 
-        Model model = Model::loadFromFile(modelPath);
-        Predictor::predict(model, sentece, M);
+        const Model model = Model::loadFromFile(modelPath);
+        Predictor::predict(model, sentence, M);
     }
 
     return 0;
