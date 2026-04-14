@@ -25,10 +25,11 @@ Process finished with exit code 0
 Perpleksnost:
 
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Kneser-Ney-2-gram-5000.txt korpus/kas-6000.text.txt
-Perplexity: 51.1449
+C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Good_Turing-2-gram-5000.txt korpus/kas-6000.text.txt
+Perplexity: 15712571.13027192652225494385
 
 Process finished with exit code 0
+
 ```
 
 - model zgrajen na 3-gramih
@@ -49,8 +50,8 @@ Process finished with exit code 0
 Perpleksnost:
 
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Kneser-Ney-2-gram-5000.txt korpus/kas-6000.text.txt
-Perplexity: 51.1449
+C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Good_Turing-3-gram-5000.txt korpus/kas-6000.text.txt
+Perplexity: 121416858928.42788696289062500000
 
 Process finished with exit code 0
 ```
@@ -76,7 +77,7 @@ Perpleksnost:
 
 ```text
 C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Kneser-Ney-2-gram-5000.txt korpus/kas-6000.text.txt
-Perplexity: 51.1449
+Perplexity: 51.14493501445728185217
 
 Process finished with exit code 0
 ```

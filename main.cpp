@@ -47,9 +47,9 @@ int main(int argc, char* argv[]) {
         const std::string modelPath = argv[2];
         const int M = 5;
 
-        std::string sentence = "Univerza v Mariboru";
-        /*std::cout << "Input sentence: ";
-        std::getline(std::cin, sentence);*/
+        std::string sentence;
+        std::cout << "Input sentence: ";
+        std::getline(std::cin, sentence);
 
         const Model model = Model::loadFromFile(modelPath);
         std::string predictedSentence = Predictor::predictWords(model, sentence, M);
