@@ -25,8 +25,8 @@ Process finished with exit code 0
 Perpleksnost:
 
 ```text
-/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/gt_2.txt korpus/kas-8905000.text.txt
-Perplexity: 3.86144285927989328044
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/gt_2.txt korpus/kas-6000.text.txt
+Perplexity: 3.67432138611853531529
 
 Process finished with exit code 0
 ```
@@ -50,8 +50,8 @@ Process finished with exit code 0
 Perpleksnost:
 
 ```text
-/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/gt_3.txt korpus/kas-8905000.text.txt
-Perplexity: 1.29711242854878849862
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/gt_3.txt korpus/kas-6000.text.txt
+Perplexity: 1.24712297316746800746
 
 Process finished with exit code 0
 ```
@@ -76,8 +76,8 @@ Process finished with exit code 0
 Perpleksnost: 
 
 ```text
-/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/kn_2.txt korpus/kas-8905000.text.txt
-Perplexity: 47.31519927929065261196
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/kn_2.txt korpus/kas-6000.text.txt
+Perplexity: 51.14493501445728185217
 
 Process finished with exit code 0
 ```
@@ -99,8 +99,8 @@ Process finished with exit code 0
 ```
 
 ```text
-/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/kn_3.txt korpus/kas-8905000.text.txt
-Perplexity: 5.90797776444274980179
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/kn_3.txt korpus/kas-6000.text.txt
+Perplexity: 5.58331741048027740959
 
 Process finished with exit code 0
 ```

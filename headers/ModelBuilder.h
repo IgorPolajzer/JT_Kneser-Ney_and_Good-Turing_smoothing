@@ -82,57 +82,27 @@ namespace ModelBuilder {
     inline Model buildGoodTuring(const std::string& corpusPath, const int nGramSize) {
         const auto nGrams = NGramProcessor::getNgramFrequencies(corpusPath, nGramSize);
 
-        long N = 0;
+        double N = 0; // Total n-gram count (sum of frequencies).
         for (const auto& ng : nGrams) N += ng.second;
-
-        // Calculate Vocabulary Size (V) to find N0 (number of unseen n-grams)
-        std::set<std::string> vocabulary;
-        for (const auto& ng : nGrams) {
-            auto words = Util::senteceToWords(ng.first);
-            for (const auto& w : words) {
-                vocabulary.insert(w);
-            }
-        }
-        
-        double N0 = 1;
 
         Model model(nGramSize);
         int N1 = 0;
         for (const auto& nGram : nGrams) {
-            const int c = nGram.second;
+            const int c = nGram.second; // nGram Frequency.
 
             // Count items which occur once.
-            if (c == 1) {
-                N1++;
-            }
+            if (c == 1) N1++;
 
-            // Count n-grams with frequency c (Nc) and c+1 (Nc+1).
-            int Nc = 0, Nc_plus_1 = 0;
-            for (const auto& other : nGrams) {
-                if (other.second == c)     Nc++;
-                if (other.second == c + 1) Nc_plus_1++;
-            }
-
-            double c_star;
-            if (Nc_plus_1 == 0) {
-                c_star = c;
-            }
-            else {
-                c_star = static_cast<double>(c + 1) * Nc_plus_1 / Nc;
-            }
-
-            double frequency = c_star / N;
-            model.addEntry(nGram.first, frequency);
+            double c_star = static_cast<double>(c) - D;
+            double Pgt = c_star / N;
+            model.addEntry(nGram.first, Pgt);
         }
 
-        // Add probability for <UNK> to the end.
-        // Unseen mass (N1/N) is divided by N0 (number of unseen n-grams) 
-        // to get the probability of a SINGLE unseen n-gram.
-        const double totalUnseenProbMass = static_cast<double>(N1) / static_cast<double>(N);
-        const double unkProb = totalUnseenProbMass / N0;
-        
-        model.addEntry(Model::UNKNOWN, unkProb);
-        model.setUnseenProbability(unkProb);
+        // Probability for unknown tokens.
+        const double Pgt_unk = static_cast<double>(N1) / N;
+
+        model.addEntry(Model::UNKNOWN, Pgt_unk);
+        model.setUnseenProbability(Pgt_unk);
 
         model.sort();
         return model;
