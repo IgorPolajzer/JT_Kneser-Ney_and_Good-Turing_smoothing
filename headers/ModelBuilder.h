@@ -94,9 +94,7 @@ namespace ModelBuilder {
             }
         }
         
-        double V = vocabulary.size();
-        double possibleNGrams = std::pow(V, nGramSize);
-        double N0 = std::max(1.0, possibleNGrams - static_cast<double>(nGrams.size()));
+        double N0 = 1;
 
         Model model(nGramSize);
         int N1 = 0;
@@ -104,7 +102,7 @@ namespace ModelBuilder {
             const int c = nGram.second;
 
             // Count items which occur once.
-            if (nGram.second == 1) {
+            if (c == 1) {
                 N1++;
             }
 

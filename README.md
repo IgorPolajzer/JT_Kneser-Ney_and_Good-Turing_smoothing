@@ -8,35 +8,35 @@ Modele sem zgradil na korpusu [kas-5000.text.txt](korpus/kas-5000.text.txt)
 
 - model zgrajen na 2-gramih
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -p models/Good_Turing-2-gram-5000.txt
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -p model/gt_2.txt korpus/kas-6000.text.txt
+Input sentence: Univerza v Mariboru
 Vhod: Univerza v Mariboru
-Vmesni rezultati:
-in
-se
+Vmesni rezultati: 
+Fakulteta
+za
+to
 je
 bila
-Natascha
-Izhod: Univerza v Mariboru in se je bila Natascha
+Izhod: Univerza v Mariboru Fakulteta za to je bila
 
 Process finished with exit code 0
-
 ```
 
 Perpleksnost:
 
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Good_Turing-2-gram-5000.txt korpus/kas-6000.text.txt
-Perplexity: 15712571.13027192652225494385
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/gt_2.txt korpus/kas-8905000.text.txt
+Perplexity: 3.86144285927989328044
 
 Process finished with exit code 0
-
 ```
 
 - model zgrajen na 3-gramih
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -p models/Good_Turing-3-gram-5000.txt
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -p model/gt_3.txt korpus/kas-6000.text.txt
+Input sentence: Univerza v Mariboru
 Vhod: Univerza v Mariboru
-Vmesni rezultati:
+Vmesni rezultati: 
 Fakulteta
 za
 varnostne
@@ -50,8 +50,8 @@ Process finished with exit code 0
 Perpleksnost:
 
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Good_Turing-3-gram-5000.txt korpus/kas-6000.text.txt
-Perplexity: 121416858928.42788696289062500000
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/gt_3.txt korpus/kas-8905000.text.txt
+Perplexity: 1.29711242854878849862
 
 Process finished with exit code 0
 ```
@@ -59,9 +59,10 @@ Process finished with exit code 0
 ### Kneser-Ney
 - model zgrajen na 2-gramih
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -p models/Kneser-Ney-2-gram-5000.txt
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -p model/kn_2.txt korpus/kas-6000.text.txt
+Input sentence: Univerza v Mariboru
 Vhod: Univerza v Mariboru
-Vmesni rezultati:
+Vmesni rezultati: 
 in
 se
 je
@@ -70,36 +71,36 @@ Natascha
 Izhod: Univerza v Mariboru in se je bila Natascha
 
 Process finished with exit code 0
-
 ```
 
 Perpleksnost: 
 
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Kneser-Ney-2-gram-5000.txt korpus/kas-6000.text.txt
-Perplexity: 51.14493501445728185217
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/kn_2.txt korpus/kas-8905000.text.txt
+Perplexity: 47.31519927929065261196
 
 Process finished with exit code 0
 ```
 
 - model zgrajen na 3-gramih
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -p models/Kneser-Ney-3-gram-5000.txt
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -p model/kn_3.txt korpus/kas-6000.text.txt
+Input sentence: Univerza v Mariboru
 Vhod: Univerza v Mariboru
-Vmesni rezultati:
+Vmesni rezultati: 
 Fakulteta
 za
 varnostne
 vede
-smer
-Izhod: Univerza v Mariboru Fakulteta za varnostne vede smer
+</s>
+Izhod: Univerza v Mariboru Fakulteta za varnostne vede </s>
 
 Process finished with exit code 0
 ```
 
 ```text
-C:\MAG\1_LETNIK\2_SEMESTER\JEZIKOVNE_TEHNOLOGIJE\RV2\cmake-build-debug\RV2.exe -mp models/Kneser-Ney-3-gram-5000.txt korpus/kas-6000.text.txt
-Perplexity: 5.58331741048027740959
+/home/igor/Desktop/MAG/1_LETNIK/2_SEMESTER/JEZIKOVNE_TEHNOLOGIJE/JT_RV2/cmake-build-debug/RV2 -mp model/kn_3.txt korpus/kas-8905000.text.txt
+Perplexity: 5.90797776444274980179
 
 Process finished with exit code 0
 ```
